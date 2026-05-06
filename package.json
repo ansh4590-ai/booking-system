@@ -1,0 +1,11 @@
+{
+  "name": "hotel-booking-root",
+  "version": "1.0.0",
+  "description": "Hotel Booking Application",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npx -y serve -l 3000 frontend\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
