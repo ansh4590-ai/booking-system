@@ -33,8 +33,46 @@
             </form>
         </div>
 
+        <!-- Search results will be inserted here by retrieve.js -->
         <div id="bookingResults" style="margin-top: 20px;"></div>
     </div>
+
+    <!-- ─────────────────────────────────────────────────────────────────────
+         BOOKING CARD TEMPLATE
+         Defines the full HTML layout of one booking result card.
+         JavaScript clones this for each matching booking and fills in the data.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <template id="bookingCardTemplate">
+        <div class="card">
+
+            <!-- Top row: Booking ID on the left, status badge on the right -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <strong class="col-booking-id"></strong>
+                <span class="badge col-status"></span>
+            </div>
+
+            <!-- Two-column layout: guest info left, room/dates info right -->
+            <div class="form-row">
+                <div>
+                    <p><strong>Guest Name:</strong> <span class="col-name"></span></p>
+                    <p><strong>Email:</strong>       <span class="col-email"></span></p>
+                    <p><strong>Phone:</strong>       <span class="col-phone"></span></p>
+                </div>
+                <div>
+                    <p><strong>Room Type:</strong>  <span class="col-room"></span></p>
+                    <p><strong>Check-in:</strong>   <span class="col-checkin"></span></p>
+                    <p><strong>Check-out:</strong>  <span class="col-checkout"></span></p>
+                    <p><strong>Guests:</strong>     <span class="col-guests"></span></p>
+                </div>
+            </div>
+
+            <!-- Footer of the card: booking creation date -->
+            <p style="margin-top: 10px; font-size: 0.85rem; color: #666;">
+                Booked on: <span class="col-created"></span>
+            </p>
+
+        </div>
+    </template>
 
     <footer>
         &copy; 2026 Grand Heritage Hotel. All rights reserved.

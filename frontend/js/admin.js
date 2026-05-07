@@ -1,6 +1,6 @@
 // ─── ADMIN DASHBOARD ───────────────────────────────────────────────────────
 // This file handles:
-//  1. Loading all bookings from the backend and displaying them in a table
+//  1. Loading all bookings from the backend and filling the table
 //  2. Opening a modal to edit a booking's status
 //  3. Saving the updated status back to the backend
 //  4. Deleting a booking
@@ -9,35 +9,62 @@
 const bookingsBody = document.getElementById('bookingsBody');
 const editModal    = document.getElementById('editModal');
 
+// Get the <template> element from admin.html
+// This template holds the HTML structure of one table row (no data yet)
+const rowTemplate  = document.getElementById('bookingRowTemplate');
+
 
 // ── 1. Load all bookings from the API and fill the table ───────────────────
 async function loadBookings() {
     try {
-        // GET /api/bookings  →  returns an array of all bookings
+        // GET /api/bookings  →  returns an array of all booking objects
         const bookings = await api.fetch('/bookings');
 
-        // If no bookings exist, show a simple message in the table
+        // If no bookings exist, show a simple message
         if (bookings.length === 0) {
             bookingsBody.innerHTML = '<tr><td colspan="6" class="text-center">No bookings found.</td></tr>';
             return;
         }
 
-        // Build one <tr> row for each booking and insert into the table body
-        bookingsBody.innerHTML = bookings.map(function(b) {
-            return `
-                <tr>
-                    <td>${b.bookingId}</td>
-                    <td>${b.fullName}<br><small>${b.email}</small></td>
-                    <td>${b.roomType}</td>
-                    <td>${api.formatDate(b.checkInDate)} – ${api.formatDate(b.checkOutDate)}</td>
-                    <td><span class="badge badge-${b.status.toLowerCase()}">${b.status}</span></td>
-                    <td>
-                        <button onclick="openEditModal('${b._id}', '${b.status}')" class="btn btn-outline" style="font-size:0.8rem; padding:4px 10px;">Edit</button>
-                        <button onclick="deleteBooking('${b._id}')" class="btn" style="font-size:0.8rem; padding:4px 10px; background:#fee; color:#c00; border:1px solid #fcc; margin-left:5px;">Delete</button>
-                    </td>
-                </tr>
-            `;
-        }).join('');
+        // Clear the table body before inserting fresh rows
+        bookingsBody.innerHTML = '';
+
+        // Loop through each booking and create a row using the HTML template
+        bookings.forEach(function(b) {
+
+            // Clone the <template> content so we get a fresh copy of the row HTML
+            const row = rowTemplate.content.cloneNode(true);
+
+            // Fill in each table cell using the class names defined in the template
+            row.querySelector('.col-id').textContent    = b.bookingId;
+
+            // Guest cell shows name + email on a new line
+            row.querySelector('.col-guest').innerHTML   = b.fullName + '<br><small>' + b.email + '</small>';
+
+            row.querySelector('.col-room').textContent  = b.roomType;
+
+            // Dates cell shows check-in and check-out on separate lines
+            row.querySelector('.col-dates').innerHTML   = api.formatDate(b.checkInDate) + ' –<br>' + api.formatDate(b.checkOutDate);
+
+            // Status cell shows a coloured badge (CSS class depends on status value)
+            const statusSpan = document.createElement('span');
+            statusSpan.className   = 'badge badge-' + b.status.toLowerCase();
+            statusSpan.textContent = b.status;
+            row.querySelector('.col-status').appendChild(statusSpan);
+
+            // Wire up the Edit button — passes this booking's id and current status
+            row.querySelector('.btn-edit').addEventListener('click', function() {
+                openEditModal(b._id, b.status);
+            });
+
+            // Wire up the Delete button — passes this booking's id
+            row.querySelector('.btn-delete').addEventListener('click', function() {
+                deleteBooking(b._id);
+            });
+
+            // Add the completed row to the table body
+            bookingsBody.appendChild(row);
+        });
 
     } catch (err) {
         api.showNotification(err.message, 'error');
@@ -65,7 +92,7 @@ async function updateBooking() {
     const status = document.getElementById('editStatus').value;
 
     try {
-        // PUT /api/bookings/:id  →  updates the booking's status field
+        // PUT /api/bookings/:id  →  updates only the status field
         await api.fetch('/bookings/' + id, {
             method: 'PUT',
             body: JSON.stringify({ status })
@@ -73,30 +100,29 @@ async function updateBooking() {
 
         api.showNotification('Booking updated successfully');
         closeModal();
-        loadBookings(); // Refresh the table to show the new status
+        loadBookings(); // Refresh table to show updated status
     } catch (err) {
         api.showNotification(err.message, 'error');
     }
 }
 
 
-// ── 5. Delete a booking after confirmation ─────────────────────────────────
+// ── 5. Delete a booking after asking for confirmation ──────────────────────
 async function deleteBooking(id) {
-    // Ask the user to confirm before permanently deleting
     const confirmed = confirm('Are you sure you want to delete this booking?');
     if (!confirmed) return;
 
     try {
-        // DELETE /api/bookings/:id  →  removes the booking from the database
+        // DELETE /api/bookings/:id  →  permanently removes the booking
         await api.fetch('/bookings/' + id, { method: 'DELETE' });
 
         api.showNotification('Booking deleted');
-        loadBookings(); // Refresh the table
+        loadBookings(); // Refresh table
     } catch (err) {
         api.showNotification(err.message, 'error');
     }
 }
 
 
-// ── Run loadBookings() when the page finishes loading ──────────────────────
+// ── Run loadBookings() as soon as the page is ready ────────────────────────
 document.addEventListener('DOMContentLoaded', loadBookings);

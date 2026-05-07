@@ -49,11 +49,33 @@
         </div>
     </div>
 
+    <!-- ─────────────────────────────────────────────────────────────────────
+         TABLE ROW TEMPLATE
+         This <template> defines the HTML structure of one booking row.
+         It is hidden by the browser — JavaScript clones it for each booking.
+    ──────────────────────────────────────────────────────────────────────── -->
+    <template id="bookingRowTemplate">
+        <tr>
+            <td class="col-id"></td>
+            <td class="col-guest"></td>
+            <td class="col-room"></td>
+            <td class="col-dates"></td>
+            <td class="col-status"></td>
+            <td class="col-actions">
+                <button class="btn-edit btn btn-outline" style="font-size:0.8rem; padding:4px 10px;">Edit</button>
+                <button class="btn-delete btn" style="font-size:0.8rem; padding:4px 10px; background:#fee; color:#c00; border:1px solid #fcc; margin-left:5px;">Delete</button>
+            </td>
+        </tr>
+    </template>
+
     <footer>
         &copy; 2026 Grand Heritage Hotel. All rights reserved.
     </footer>
 
-    <!-- Edit Status Modal -->
+    <!-- ─────────────────────────────────────────────────────────────────────
+         EDIT STATUS MODAL
+         Shown as an overlay when the admin clicks "Edit" on a booking row.
+    ──────────────────────────────────────────────────────────────────────── -->
     <div id="editModal" class="modal-backdrop" style="display: none;">
         <div class="card" style="width: 90%; max-width: 400px;">
             <h3 style="margin-bottom: 15px;">Update Booking Status</h3>
