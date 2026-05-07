@@ -42,7 +42,7 @@ const checkAvailability = async (roomType, checkIn, checkOut, excludeBookingId =
 };
 
 // GET availability
-router.get('/availability', async (req, res) => {
+router.get('/availability', async (req,res) => {
     try {
         const { roomType, checkIn, checkOut } = req.query;
         if (!roomType || !checkIn || !checkOut) {
@@ -57,7 +57,7 @@ router.get('/availability', async (req, res) => {
 });
 
 // SEARCH bookings
-router.get('/bookings/search', async (req, res) => {
+router.get('/bookings/search', async (req,res) => {
     try {
         const { query } = req.query;
         if (!query) return res.status(400).json({ message: 'Search query required' });

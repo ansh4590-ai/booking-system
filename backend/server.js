@@ -14,7 +14,6 @@ app.use(express.json());
 const bookingRoutes = require('./routes/bookings');
 app.use('/api', bookingRoutes); // Changed to mount at /api so /api/bookings and /api/availability both work
 
-
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/hotel_booking')
     .then(() => console.log('Connected to MongoDB'))
