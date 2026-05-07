@@ -22,19 +22,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 `/availability?roomType=${roomType}&checkIn=${checkIn}&checkOut=${checkOut}`
             );
 
-            resultBox.style.display = 'block';
+            // Reset result box classes
+            resultBox.className = 'availability-result';
 
             if (data.available) {
-                resultBox.style.backgroundColor = '#d4edda';
-                resultText.style.color          = '#155724';
-                resultText.textContent          = `Yes! ${roomType} is available for these dates.`;
-                bookBtn.href         = `booking.html?type=${roomType}&in=${checkIn}&out=${checkOut}`;
-                bookBtn.style.display = 'inline-block';
+                resultBox.classList.add('availability-success');
+                resultText.textContent = `Yes! ${roomType} is available for these dates.`;
+                
+                bookBtn.href = `booking.html?type=${roomType}&in=${checkIn}&out=${checkOut}`;
+                bookBtn.classList.add('display-inline-block');
             } else {
-                resultBox.style.backgroundColor = '#f8d7da';
-                resultText.style.color          = '#721c24';
-                resultText.textContent          = `Sorry, ${roomType} is fully booked for these dates.`;
-                bookBtn.style.display           = 'none';
+                resultBox.classList.add('availability-error');
+                resultText.textContent = `Sorry, ${roomType} is fully booked for these dates.`;
+                
+                bookBtn.classList.remove('display-inline-block');
             }
         } catch (err) {
             api.showNotification(err.message, 'error');

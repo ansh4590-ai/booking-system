@@ -386,3 +386,23 @@ footer {
 }
 
 .modal-title { margin-bottom: 15px; }
+
+.availability-success {
+    background-color: #d4edda;
+    color: #155724;
+    display: block !important;
+}
+
+.availability-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    display: block !important;
+}
+
+.display-block {
+    display: block !important;
+}
+
+.display-inline-block {
+    display: inline-block !important;
+}

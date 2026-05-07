@@ -1,8 +1,6 @@
 const API_BASE = 'http://localhost:5000/api';
 
-// Shared API helper functions
 const api = {
-    // Shared fetch wrapper for all requests
     async fetch(endpoint, options = {}) {
         const url = API_BASE + endpoint;
         const defaultOptions = {
@@ -23,7 +21,6 @@ const api = {
         }
     },
 
-    // Show pop-up notification
     showNotification(message, type = 'success') {
         const div = document.createElement('div');
         div.className = 'notification ' + type;
@@ -36,7 +33,6 @@ const api = {
         }, 3000);
     },
 
-    // Format ISO date to local string
     formatDate(dateString) {
         return new Date(dateString).toLocaleDateString();
     }
