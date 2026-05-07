@@ -21,27 +21,27 @@
 
     <div class="container">
         <h1 class="page-title">Find My Booking</h1>
-        <p style="color: #555; margin-bottom: 20px; font-size: 0.9rem;">Enter your Booking ID, Email, or Phone Number to find your reservation.</p>
+        <p class="page-subtitle">Enter your Booking ID, Email, or Phone Number to find your reservation.</p>
 
-        <div class="card" style="max-width: 550px;">
+        <div class="card form-card-narrow">
             <form id="searchForm">
                 <div class="form-group">
                     <label for="searchQuery">Search</label>
                     <input type="text" id="searchQuery" required placeholder="Booking ID, email or phone number">
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">Search Booking</button>
+                <button type="submit" class="btn btn-primary btn-form">Search Booking</button>
             </form>
         </div>
 
         <!-- Search results will be inserted here by retrieve.js -->
-        <div id="bookingResults" style="margin-top: 20px;"></div>
+        <div id="bookingResults" class="results-area"></div>
     </div>
 
     <template id="bookingCardTemplate">
         <div class="card">
 
             <!-- Top row: Booking ID on the left, status badge on the right -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div class="card-header">
                 <strong class="col-booking-id"></strong>
                 <span class="badge col-status"></span>
             </div>
@@ -62,7 +62,7 @@
             </div>
 
             <!-- Footer of the card: booking creation date -->
-            <p style="margin-top: 10px; font-size: 0.85rem; color: #666;">
+            <p class="card-footer-date">
                 Booked on: <span class="col-created"></span>
             </p>
 
@@ -71,7 +71,7 @@
 
     <footer>
         <p>124 Heritage Lane, Civil Lines, New Delhi | Phone: +91 11 2345 6789 | Email: stay@grandheritage.com</p>
-        <p style="margin-top: 5px; opacity: 0.7;">&copy; 2026 Grand Heritage Hotel. All rights reserved.</p>
+        <p class="footer-copy">&copy; 2026 Grand Heritage Hotel. All rights reserved.</p>
     </footer>
 
     <script src="js/api.js"></script>

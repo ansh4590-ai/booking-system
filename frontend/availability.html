@@ -21,9 +21,9 @@
 
     <div class="container">
         <h1 class="page-title">Check Room Availability</h1>
-        <p style="color: #555; margin-bottom: 20px; font-size: 0.9rem;">Select your dates and room type to check live availability.</p>
+        <p class="page-subtitle">Select your dates and room type to check live availability.</p>
 
-        <div class="card" style="max-width: 550px;">
+        <div class="card form-card-narrow">
             <form id="availabilityForm">
                 <div class="form-group">
                     <label for="roomType">Room Type</label>
@@ -46,19 +46,19 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary" style="width: 100%; padding: 10px;">Check Availability</button>
+                <button type="submit" class="btn btn-primary btn-form">Check Availability</button>
             </form>
 
-            <div id="resultBox" style="margin-top: 20px; display: none; padding: 15px; border-radius: 4px; border: 1px solid #ddd;">
-                <p id="resultText" style="font-weight: bold;"></p>
-                <a id="bookBtn" href="booking.html" class="btn btn-primary" style="margin-top: 10px; display: none;">Proceed to Booking</a>
+            <div id="resultBox" class="availability-result">
+                <p id="resultText" class="fw-bold"></p>
+                <a id="bookBtn" href="booking.html" class="btn btn-primary book-btn">Proceed to Booking</a>
             </div>
         </div>
     </div>
 
     <footer>
         <p>124 Heritage Lane, Civil Lines, New Delhi | Phone: +91 11 2345 6789 | Email: stay@grandheritage.com</p>
-        <p style="margin-top: 5px; opacity: 0.7;">&copy; 2026 Grand Heritage Hotel. All rights reserved.</p>
+        <p class="footer-copy">&copy; 2026 Grand Heritage Hotel. All rights reserved.</p>
     </footer>
 
     <script src="js/api.js"></script>
