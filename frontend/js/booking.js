@@ -16,8 +16,14 @@ document.addEventListener('DOMContentLoaded', function() {
     if (urlParams.has('type')) roomTypeSelect.value = urlParams.get('type');
 
     const today = new Date().toISOString().split('T')[0];
+    const maxDate = new Date();
+    maxDate.setFullYear(maxDate.getFullYear() + 1);
+    const maxDateStr = maxDate.toISOString().split('T')[0];
+
     document.getElementById('checkInDate').min  = today;
+    document.getElementById('checkInDate').max  = maxDateStr;
     document.getElementById('checkOutDate').min = today;
+    document.getElementById('checkOutDate').max = maxDateStr;
 
     bookingForm.addEventListener('submit', async function(e) {
         e.preventDefault();
