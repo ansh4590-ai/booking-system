@@ -26,7 +26,7 @@ const bookingSchema = new mongoose.Schema({
     roomType: {
         type: String,
         required: true,
-        enum: ['Standard', 'Deluxe', 'Suite', 'Family']
+        enum: ['Standard', 'Suite', 'Family']
     },
     checkInDate: {
         type: Date,

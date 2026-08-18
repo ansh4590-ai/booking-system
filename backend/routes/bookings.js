@@ -10,7 +10,6 @@ const generateBookingId = () => {
 
 const ROOM_CAPACITIES = {
     'Standard': 5,
-    'Deluxe': 3,
     'Suite': 2,
     'Family': 2
 };
