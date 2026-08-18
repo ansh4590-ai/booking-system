@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Booking = require('../models/Booking');
 
 const generateBookingId = () => {
@@ -27,7 +28,7 @@ const checkAvailability = async (roomType, checkIn, checkOut, excludeBookingId =
     };
 
     if (excludeBookingId) {
-        query._id = { $ne: excludeBookingId };
+        query._id = { $ne: new mongoose.Types.ObjectId(excludeBookingId) };
     }
 
     const overlappingBookings = await Booking.find(query);
@@ -143,7 +144,6 @@ router.put('/bookings/:id', async (req, res) => {
 });
 
 router.delete('/bookings/:id', async (req, res) => {
-
     try {
         const result = await Booking.findByIdAndDelete(req.params.id);
         if (!result) return res.status(404).json({ message: 'Booking not found' });
