@@ -53,7 +53,6 @@ const bookingSchema = new mongoose.Schema({
     }
 });
 
-// Pre-save validation for dates
 bookingSchema.pre('validate', function(next) {
     if (this.checkOutDate <= this.checkInDate) {
         this.invalidate('checkOutDate', 'Check-out date must be after check-in date');

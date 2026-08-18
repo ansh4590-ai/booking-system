@@ -2,14 +2,12 @@ const express = require('express');
 const router = express.Router();
 const Booking = require('../models/Booking');
 
-// Utility to generate unique booking ID
 const generateBookingId = () => {
     const date = new Date().toISOString().slice(0, 10).replace(/-/g, '');
     const random = Math.random().toString(36).substring(2, 6).toUpperCase();
     return `BK-${date}-${random}`;
 };
 
-// Room Capacities (Example)
 const ROOM_CAPACITIES = {
     'Standard': 5,
     'Deluxe': 3,
@@ -17,12 +15,10 @@ const ROOM_CAPACITIES = {
     'Family': 2
 };
 
-// Check availability helper
 const checkAvailability = async (roomType, checkIn, checkOut, excludeBookingId = null) => {
     const start = new Date(checkIn);
     const end = new Date(checkOut);
 
-    // Find overlapping bookings that are NOT cancelled
     const query = {
         roomType,
         status: { $ne: 'Cancelled' },
@@ -41,7 +37,6 @@ const checkAvailability = async (roomType, checkIn, checkOut, excludeBookingId =
     return bookedCount < ROOM_CAPACITIES[roomType];
 };
 
-// GET availability
 router.get('/availability', async (req,res) => {
     try {
         const { roomType, checkIn, checkOut } = req.query;
@@ -56,7 +51,6 @@ router.get('/availability', async (req,res) => {
     }
 });
 
-// SEARCH bookings
 router.get('/bookings/search', async (req,res) => {
     try {
         const { query } = req.query;
@@ -75,7 +69,6 @@ router.get('/bookings/search', async (req,res) => {
     }
 });
 
-// GET all bookings
 router.get('/bookings', async (req, res) => {
     try {
         const bookings = await Booking.find().sort({ createdAt: -1 });
@@ -85,7 +78,6 @@ router.get('/bookings', async (req, res) => {
     }
 });
 
-// GET one booking
 router.get('/bookings/:id', async (req, res) => {
     try {
         const booking = await Booking.findById(req.params.id);
@@ -96,12 +88,10 @@ router.get('/bookings/:id', async (req, res) => {
     }
 });
 
-// POST create booking
 router.post('/bookings', async (req, res) => {
     try {
         const { fullName, email, phone, roomType, checkInDate, checkOutDate, guests } = req.body;
 
-        // Check availability first
         const isAvailable = await checkAvailability(roomType, checkInDate, checkOutDate);
         if (!isAvailable) {
             return res.status(400).json({ message: 'Room not available for the selected dates' });
@@ -125,12 +115,10 @@ router.post('/bookings', async (req, res) => {
     }
 });
 
-// PUT update booking
 router.put('/bookings/:id', async (req, res) => {
     try {
         const { roomType, checkInDate, checkOutDate, status } = req.body;
         
-        // If room/dates change, re-check availability
         if (roomType || checkInDate || checkOutDate) {
             const currentBooking = await Booking.findById(req.params.id);
             const isAvailable = await checkAvailability(
@@ -155,7 +143,6 @@ router.put('/bookings/:id', async (req, res) => {
     }
 });
 
-// DELETE booking
 router.delete('/bookings/:id', async (req, res) => {
 
     try {

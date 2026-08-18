@@ -1,4 +1,3 @@
-// AVAILABILITY PAGE - Check if rooms are free for selected dates
 document.addEventListener('DOMContentLoaded', function() {
     const form       = document.getElementById('availabilityForm');
     const resultBox  = document.getElementById('resultBox');
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 `/availability?roomType=${roomType}&checkIn=${checkIn}&checkOut=${checkOut}`
             );
 
-            // Reset result box classes
             resultBox.className = 'availability-result';
 
             if (data.available) {

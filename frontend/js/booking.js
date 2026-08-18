@@ -1,11 +1,9 @@
-// BOOKING PAGE - Handles room reservations and form validation
 document.addEventListener('DOMContentLoaded', function() {
     const bookingForm    = document.getElementById('bookingForm');
     const roomTypeSelect = document.getElementById('roomType');
     const nameInput      = document.getElementById('fullName');
     const phoneInput     = document.getElementById('phone');
 
-    // 1. Input filtering (Real-time)
     nameInput.addEventListener('input', (e) => {
         e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, '');
     });
@@ -14,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.value = e.target.value.replace(/\D/g, '').slice(0, 10);
     });
 
-    // 2. Initialize form with URL parameters and date limits
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('type')) roomTypeSelect.value = urlParams.get('type');
 
@@ -22,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('checkInDate').min  = today;
     document.getElementById('checkOutDate').min = today;
 
-    // 3. Form Submission and Validation
     bookingForm.addEventListener('submit', async function(e) {
         e.preventDefault();
 

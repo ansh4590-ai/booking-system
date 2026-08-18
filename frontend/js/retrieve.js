@@ -1,4 +1,3 @@
-// RETRIEVE PAGE - Search for existing bookings
 document.addEventListener('DOMContentLoaded', function() {
     const searchForm       = document.getElementById('searchForm');
     const resultsContainer = document.getElementById('bookingResults');
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return card;
     }
 
-    // Handle search form submission
     searchForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const query = document.getElementById('searchQuery').value.trim();
@@ -45,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Auto-search if ID is in URL
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('id')) {
         document.getElementById('searchQuery').value = urlParams.get('id');

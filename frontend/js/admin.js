@@ -1,9 +1,7 @@
-// ADMIN DASHBOARD - Manages all reservations
 const bookingsBody = document.getElementById('bookingsBody');
 const editModal    = document.getElementById('editModal');
 const rowTemplate  = document.getElementById('bookingRowTemplate');
 
-// 1. Load all bookings from the API
 async function loadBookings() {
     try {
         const bookings = await api.fetch('/bookings');
@@ -43,7 +41,6 @@ async function loadBookings() {
     }
 }
 
-// 2. Manage status modal
 function openEditModal(bookingId, currentStatus) {
     document.getElementById('editId').value     = bookingId;
     document.getElementById('editStatus').value = currentStatus;
@@ -71,7 +68,6 @@ async function updateBooking() {
     }
 }
 
-// 3. Delete booking
 async function deleteBooking(id) {
     if (!confirm('Are you sure you want to delete this booking?')) return;
     try {
